@@ -1,0 +1,24 @@
+<!doctype html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="{{ url_for('static',filename='css/theme.css') }}" rel="stylesheet" type="text/css" media="all" />
+<html>  
+  <head>
+  </head>  
+  <body style="font-size: 1.5vw;">
+    <h1 style="font-size: 266%;"><a href="{{ url_for('show_run_rwmc_form') }}">Igloo Web</a></h1>
+    {% if session.get('is_admin') %}
+    <a style="font-size: 120%;" href="{{ url_for('show_admin_page') }}">Admin</a>
+    {% endif %}    
+    <hr>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+    {% block content %} {% endblock %}
+  </body>
+</html>

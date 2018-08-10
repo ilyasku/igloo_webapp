@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="width: 100%; font-size:200%;">
+  <form style="width: 100%;" action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+      {{ form.start_pos.label }}<br>
+      {{ form.start_pos(style="font-size: 80%;", size=32) }}
+      {% for error in form.start_pos.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.length.label }}<br/>
+      {{ form.length(style="font-size: 80%;", size=32) }}
+      {% for error in form.length.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.T_min.label }}<br/>
+      {{ form.T_min(style="font-size: 80%;", size=32) }}
+      {% for error in form.T_min.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.T_max.label }}<br/>
+      {{ form.T_max(style="font-size: 80%;", size=32) }}
+      {% for error in form.T_max.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.T_rear.label }}<br/>
+      {{ form.T_rear(style="font-size: 80%;", size=32) }}
+      {% for error in form.T_rear.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.duration.label }}<br/>
+      {{ form.duration(style="font-size: 80%;", size=32) }}
+      {% for error in form.duration.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.frames_per_sec.label }}<br/>
+      {{ form.frames_per_sec(style="font-size: 80%;", size=32) }}
+      {% for error in form.frames_per_sec.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>
+      {{ form.simulation_type.label }}<br/>
+      {{ form.simulation_type(style="font-size: 80%;") }}
+      {% for error in form.simulation_type.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.submit(style="font-size: 80%;") }}</p>
+  </form>
+</div>
+{% endblock %}

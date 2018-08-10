@@ -24,5 +24,6 @@ setup(name='igloo_webapp',
       },
       install_requires=["flask",
                         "flask-wtf",
+                        "wtforms",
                         "nose"],
       zip_safe=False)

@@ -1,0 +1,22 @@
+body {
+    background: #202020;
+    color: #4444aa;
+}
+
+tr:nth-child(even) {
+    background: #ffffff;
+    color: #202020;
+}
+
+tr:nth-child(odd) {
+    background: #a0a0a0;
+    color: #202020;
+}
+
+a {
+    color: #4444aa;
+}
+
+th, td {
+    padding: 5px;
+}
