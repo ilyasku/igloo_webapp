@@ -22,7 +22,7 @@ setup(name='igloo_webapp',
           "gui_scripts": [
           ]
       },
-      install_requires=["flask",
+      install_requires=["Flask",
                         "flask-wtf",
                         "wtforms",
                         "nose"],

@@ -21,3 +21,6 @@ class IglooServer:
 
     def serve_admin_page(self):
         return "Nothing here yet!"
+
+    def show_results(self):
+        return "Not Implemented yet!"
