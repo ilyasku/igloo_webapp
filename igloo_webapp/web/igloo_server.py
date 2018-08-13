@@ -2,6 +2,7 @@ from flask import (render_template, redirect, flash,
                    url_for, session, abort)
 from datetime import datetime
 from .run_rwmc_form import RunRWMCForm
+from .fetch_data_form import FetchDataForm
 
 
 class IglooServer:
@@ -14,7 +15,8 @@ class IglooServer:
         form = RunRWMCForm()
         if form.validate_on_submit():
             return "valid!"
-        return render_template('submit_job.html', title='Submit Job', form=form)
+        return render_template('submit_job.html', title='Submit Job', form=form,
+                               form_fetch=fetch_data_form())
     
     def handle_run_rwmc_form(self):
         return "igloo_server.handle_run_rwmc_form: not implemented yet!"

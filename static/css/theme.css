@@ -1,6 +1,6 @@
 body {
-    background: #202020;
-    color: #4444aa;
+    background: #FFFFFF;
+    color: #333333;
 }
 
 tr:nth-child(even) {
@@ -14,13 +14,19 @@ tr:nth-child(odd) {
 }
 
 a {
-    color: #4444aa;
+    color: #4488cc;
+    //color: #ffffff;
 }
 
 th, td {
     padding: 5px;
 }
 
-.headerNavigation>a {
-    padding: 2px 0px 2px 30px;
+.headerNavigation a {
+    font-size: 1.4em;
+    padding: 2px 0px 2px 10px;
+}
+
+label, select, input{
+    font-size: 1.25em;
 }
