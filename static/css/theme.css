@@ -30,3 +30,7 @@ th, td {
 label, select, input{
     font-size: 1.25em;
 }
+
+.statusPane {
+    margin: 0 0 0 50px;
+}

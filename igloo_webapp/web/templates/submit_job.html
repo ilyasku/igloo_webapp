@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div style="width: 45%; float: left; max-width: 500px;">
+<div style="float: left; max-width:600px;">
   <h3>Submit New Job</h3>
   <form style="width: 100%;" action="" method="post">
     {{ form.hidden_tag() }}
@@ -64,7 +64,14 @@
     <p>{{ form.submit() }}</p>
   </form>
 </div>
-<div style="width: 45%; float: left; max-width: 500px;">
-  <h3>Fetch Data</h3>
+<div class="statusPane" style="float: left; max-width:600px;">
+  {% if job_id %}
+  <h3>Job Submitted!</h3>
+  Your simulations are running.<br/>
+  <b>Your job's ID is <span style="font-size: 120%; color: red;">{{ job_id}}</span>. Write it down, you need it you fetch your results.</b>
+  <br/>
+  Fetch the data (or a status report, if still running) via the
+  <a href="{{ url_for('show_results') }}">results page</a>.
+  {% endif %}
 </div>
 {% endblock %}

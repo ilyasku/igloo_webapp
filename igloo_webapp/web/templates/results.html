@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="width: 100%;">
+  <h3>Fetch Data</h3>
+  <form style="width: 100%;" action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+      {{ form.job_id.label }}<br/>
+      {{ form.job_id(size=36) }}
+      {% for error in form.job_id.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+  </form>
+</div>
+{% endblock %}

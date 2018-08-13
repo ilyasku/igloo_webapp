@@ -2,9 +2,9 @@ from igloo_webapp.app import app, server
 # from igloo_webapp.app.db_connect import get_db
 
 
-@app.route("/results", methods=['GET'])
+@app.route("/results", methods=['GET', 'POST'])
 def show_results():
-    return server.show_results()
+    return server.serve_results()
 
 @app.route("/submit-job", methods=['GET', 'POST'])
 @app.route("/", methods=['GET', 'POST'])

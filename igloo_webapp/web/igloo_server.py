@@ -14,15 +14,20 @@ class IglooServer:
     def serve_run_rwmc_form(self):
         form = RunRWMCForm()
         if form.validate_on_submit():
-            return "valid!"
-        return render_template('submit_job.html', title='Submit Job', form=form,
-                               form_fetch=fetch_data_form())
+            job_id = self.handle_run_rwmc_form(form)
+            return render_template('submit_job.html',
+                                   title='Submit Job',
+                                   form=form,
+                                   job_id=job_id)
+        return render_template('submit_job.html', title='Submit Job',
+                               form=form)
     
-    def handle_run_rwmc_form(self):
-        return "igloo_server.handle_run_rwmc_form: not implemented yet!"
-
-    def serve_admin_page(self):
-        return "Nothing here yet!"
-
-    def show_results(self):
-        return "Not Implemented yet!"
+    def handle_run_rwmc_form(self, form):
+        return -1
+    
+    def serve_results(self):
+        fetch_data_form = FetchDataForm()
+        if fetch_data_form.validate_on_submit():
+            return "fetch!"
+        return render_template('results.html', title='Fetch Results',
+                               form=fetch_data_form)

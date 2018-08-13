@@ -8,8 +8,8 @@
   <body> <!-- use this for mobile device support: style="font-size: 1.5vw;"> -->
     <h1 style="font-size: 266%;"><a href="{{ url_for('show_run_rwmc_form') }}">Igloo Web</a></h1>   
     <div class="headerNavigation">
-      <!-- <a href="{{ url_for('show_results') }}">Results</a> -->
-      <!-- <a href="{{ url_for('show_run_rwmc_form') }}">Submit New Job</a> -->
+      <a href="{{ url_for('show_results') }}">Fetch Results</a>
+      <a href="{{ url_for('show_run_rwmc_form') }}">Submit New Job</a>
       {% if session.get('is_admin') %}
       <a href="{{ url_for('show_admin_page') }}">Admin</a>
       {% endif %}
