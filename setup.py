@@ -17,7 +17,8 @@ setup(name='igloo_webapp',
       packages=["igloo_webapp"],
       entry_points={
           "console_scripts": [
-              "igloo-web-start-server=igloo_webapp.CLI.run_app:main"
+              "igloo-web-start-server=igloo_webapp.CLI.run_app:main",
+              "igloo-web-init-config-and-database=igloo_webapp.CLI.init_config_and_folders:main"
           ],
           "gui_scripts": [
           ]

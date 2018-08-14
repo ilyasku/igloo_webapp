@@ -4,5 +4,5 @@ from wtforms.validators import DataRequired
 
 
 class FetchDataForm(FlaskForm):
-    job_id = IntegerField('Job ID', validators=[DataRequired()])    
+    job_digest = IntegerField('Job Hash', validators=[DataRequired()])    
     submit = SubmitField('Fetch Data')

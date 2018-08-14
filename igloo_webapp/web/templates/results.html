@@ -6,9 +6,9 @@
   <form style="width: 100%;" action="" method="post">
     {{ form.hidden_tag() }}
     <p>
-      {{ form.job_id.label }}<br/>
-      {{ form.job_id(size=36) }}
-      {% for error in form.job_id.errors %}
+      {{ form.job_digest.label }}<br/>
+      {{ form.job_digest(size=36) }}
+      {% for error in form.job_digest.errors %}
       <span style="color: red;">[{{ error }}]</span>
       {% endfor %}
     </p>
