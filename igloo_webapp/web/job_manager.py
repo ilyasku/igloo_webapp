@@ -1,7 +1,12 @@
 import time
 import datetime
+import shutil
+import os
 from multiprocessing import Process, Queue
 from ..model.experiment import Experiment
+from ..config_io import read_config
+from ..persistence.experiments_database import ExperimentsDatabase
+from ..persistence.data_output_handler import get_tmp_folder_name, get_persistent_folder_name
 
 
 
@@ -11,10 +16,9 @@ class JobManager:
         self.n_processes = n_processes
                 
         self.waiting_jobs = Queue()
-        self.finished_jobs = Queue()
 
         for i in range(self.n_processes):
-            Process(target=worker, args=(self.waiting_jobs, self.finished_jobs)).start()
+            Process(target=_worker, args=(self.waiting_jobs, i)).start()
 
     def put_job(self, e: Experiment):
         self.waiting_jobs.put(e)
@@ -44,9 +48,39 @@ class DummyRWMC:
 
     def simulateFlyPopulation(self, n):
         time.sleep(n)
+
+    def write_dummy_file(self, fname):
+        import json
+        json.dump({'start_pos': self.startPosition, 'simulation_type': self.simulationType},
+                  open(fname, 'w'))
     
-def _worker(in_queue: Queue, out_queue):
+def _worker(in_queue: Queue, process_index: int):
     for e in iter(in_queue.get, 'STOP'):
-        rwmc = DummyRWMC(**(e.to_kwargs_dict_for_RWMC()))
-        rwmc.simulateFlyPopulation(e.n_flies)
-        out_queue.put((e.id_, datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+        _perform_simulation_and_update_database(e, process_index)
+        _move_data_from_tmp_to_persistent_folder(e.id_, process_index)        
+
+def _perform_simulation_and_update_database(e: Experiment, index: int):
+    edb = ExperimentsDatabase()
+    
+    rwmc = DummyRWMC(**(e.to_kwargs_dict_for_RWMC()))
+    e.date_start = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    edb.insert_experiment(e)
+    
+    rwmc.simulateFlyPopulation(e.n_flies)
+    
+    tmp_folder_name = get_tmp_folder_name(index)
+    if not os.path.isdir(tmp_folder_name):
+        os.mkdir(tmp_folder_name)
+    fname = tmp_folder_name + "/out.json"
+    rwmc.write_dummy_file(fname)
+    
+    e.date_finish = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    edb.set_date_finish(e.id_, e.date_finish)
+
+def _move_data_from_tmp_to_persistent_folder(id_: int, index: int):
+    tmp_folder = get_tmp_folder_name(index)
+    pers_folder = get_persistent_folder_name(id_)
+    shutil.move(tmp_folder, pers_folder)
+    os.mkdir(tmp_folder)
+    
+    

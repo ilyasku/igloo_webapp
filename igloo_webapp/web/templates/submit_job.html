@@ -61,6 +61,13 @@
       <span style="color: red;">[{{ error }}]</span>
       {% endfor %}
     </p>
+    <p>
+      {{ form.n_flies.label }}<br/>
+      {{ form.n_flies() }}
+      {% for error in form.n_flies.errors %}
+      <span style="color: red;">[{{ error }}]</span>
+      {% endfor %}
+    </p>
     <p>{{ form.submit() }}</p>
   </form>
 </div>
@@ -73,7 +80,7 @@
   We do not want to store any contact information.
   <br/><br/>
   Fetch the data (or a status report, if still running) via the
-  <a href="{{ url_for('show_results') }}">results page</a>.
+  <a href="{{ url_for('show_fetch_results') }}">results page</a>.
   {% endif %}
 </div>
 {% endblock %}

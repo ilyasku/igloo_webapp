@@ -10,8 +10,9 @@ class Experiment:
 
         self.id_ = None
         self.digest = None
+        self.date_submit = None
         self.date_start = None
-        self.date_finish = None
+        self.date_finish = None        
         self.length = length
         self.start_pos = start_pos
         self.T_min = T_min
@@ -28,7 +29,8 @@ class Experiment:
              self.T_min, self.T_max, self.T_rear,
              self.duration, self.frames_per_sec,
              self.simulation_type, self.n_flies,
-             self.date_start, self.date_finish)
+             self.date_submit, self.date_start,
+             self.date_finish)
         return t
 
     def to_kwargs_dict_for_RWMC(self):
@@ -50,7 +52,8 @@ class Experiment:
                        experiment_tuple[10])
         e.id_ = experiment_tuple[0]
         e.digest = experiment_tuple[1]
-        e.date_start = experiment_tuple[11]
-        e.date_finish = experiment_tuple[12]
+        e.date_submit = experiment_tuple[11]
+        e.date_start = experiment_tuple[12]
+        e.date_finish = experiment_tuple[13]
         return e
     

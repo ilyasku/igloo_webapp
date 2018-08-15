@@ -20,13 +20,16 @@ class ExperimentsDatabase:
         fetch_string = "SELECT * FROM experiments WHERE hash=?"
         self.cursor.execute(fetch_string, (digest,))
         experiment_tuple = self.cursor.fetchone()
+        if experiment_tuple is None:
+            return None
         return Experiment.from_database_tuple(experiment_tuple)
         
     def insert_experiment(self, experiment: Experiment):
         insert_string = """INSERT INTO experiments 
         (_id, hash, length, start_pos, T_min, T_max, T_rear, duration, 
-         frames_per_sec, simulation_type, n_flies, date_start, date_finish)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+         frames_per_sec, simulation_type, n_flies, date_submit, date_start,
+         date_finish)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """
         self.cursor.execute(insert_string, experiment.to_database_tuple())
         self.connection.commit()
@@ -40,7 +43,7 @@ class ExperimentsDatabase:
         select_string = """SELECT max(_id) FROM experiments"""
         self.cursor.execute(select_string)        
         id_tuple = self.cursor.fetchone()
-        if id_tuple is None:
+        if id_tuple[0] is None:
             return -1
         return id_tuple[0]
         

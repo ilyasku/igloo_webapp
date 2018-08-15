@@ -1,10 +1,13 @@
-from igloo_webapp.app import app, server
+from flask import send_from_directory
+from igloo_webapp.app import app, server, read_config
+from igloo_webapp.persistence.data_output_handler import get_persistent_folder_name
+from igloo_webapp.persistence.experiments_database import ExperimentsDatabase
 # from igloo_webapp.app.db_connect import get_db
 
 
 @app.route("/results", methods=['GET', 'POST'])
-def show_results():
-    return server.serve_results()
+def show_fetch_results():
+    return server.serve_fetch_results()
 
 @app.route("/submit-job", methods=['GET', 'POST'])
 @app.route("/", methods=['GET', 'POST'])
@@ -14,3 +17,9 @@ def show_run_rwmc_form():
 @app.route("/admin")
 def show_admin_page():
     return server.serve_admin_page()
+
+@app.route("/fetch/<digest>/<fname>")
+def fetch(digest: str, fname: str):
+    id_ = ExperimentsDatabase().get_experiment_by_hash_digest(digest).id_
+    folder_name = get_persistent_folder_name(id_)
+    return send_from_directory(folder_name, fname, as_attachment=True)

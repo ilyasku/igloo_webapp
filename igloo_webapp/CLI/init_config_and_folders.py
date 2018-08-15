@@ -26,12 +26,22 @@ def _create_experiments_database(path_to_db):
     frames_per_sec real NOT NULL,
     simulation_type text NOT NULL,
     n_flies integer NOT NULL,
+    date_submit text NOT NULL,
     date_start text NOT NULL,
     date_finish text)
     """
     cursor.execute(create_string)
     connection.commit()
-    
+
+def _create_current_simulations_folders(path_to_data: str, n_threads: int):
+    for i in range(n_threads):
+        folder_name = _get_tmp_folder_name(path_to_data, i)
+        if not os.path.isdir(folder_name):
+            os.mkdir(folder_name)
+
+def _get_tmp_folder_name(prefix: str, index: int) -> str:
+    tmp_folder_name = prefix + "/tmp_current_simulation_{}".format(index)
+    return tmp_folder_name
 
 def main():
     import sys

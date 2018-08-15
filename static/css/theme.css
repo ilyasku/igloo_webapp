@@ -34,3 +34,11 @@ label, select, input{
 .statusPane {
     margin: 0 0 0 50px;
 }
+
+.success {
+    color: #44aa44;
+}
+
+.failure {
+    color: #ff5555;
+}

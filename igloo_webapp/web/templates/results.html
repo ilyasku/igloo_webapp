@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div style="width: 100%;">
+<div style="float: left; max-width:600px; width: 45%;">
   <h3>Fetch Data</h3>
   <form style="width: 100%;" action="" method="post">
     {{ form.hidden_tag() }}
@@ -14,5 +14,28 @@
     </p>
     <p>{{ form.submit() }}</p>
   </form>
+</div>
+<div class="statusPane" style="float: left; max-width:600px; width: 45%;">
+  {% if message %}
+    {% if message.success %}
+      <h3 class="success"> {{ message.header }}</h3>
+    {% else %}
+      <h3 class="failure"> {{ message.header }}</h3>
+    {% endif %}
+    {% if message.messages|length == 1 %}
+      {{ message.messages[0] }}
+      {% else %}
+      <ul>
+	{% for m in message.messages %}
+	<li>{{ m }}</li>
+	{% endfor %}
+      </ul>
+    {% endif %}    
+  {% endif %}
+  <ul>    
+  {% for f in files %}
+    <li><a href="{{ url_for('fetch', fname=f.fname, digest=digest ) }}">{{ f.label }}</a></li>
+  {% endfor %}
+  </ul>
 </div>
 {% endblock %}
