@@ -7,13 +7,13 @@ from igloo_webapp.config_io import read_config
 import os
 here = os.path.dirname(os.path.realpath(__file__))
 
-
-jm = JobManager(read_config()['n_threads'])
+conf = read_config()
+jm = JobManager(conf['n_threads'])
 server = IglooServer(jm)
 # server.config_io = ConfigIO()
 
-app = Flask("IglooWebApp", template_folder=here + "/../web/templates",
-            static_folder=here + "/../../static")
+app = Flask("IglooWebApp", template_folder=conf['path_to_templates'],
+            static_folder=conf['path_to_static'])
 app.config.from_object(Config)
 
 

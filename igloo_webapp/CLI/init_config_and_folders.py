@@ -53,7 +53,15 @@ def main():
         path_to_data = sys.argv[sys.argv.index('--path-to-data')+1]
     else:
         path_to_data = input("Folder to store data in: ")
-    write_config(path_to_data, n_threads)
+    if '--path-to-templates' in sys.argv:
+        path_to_templates = sys.argv[sys.argv.index('--path-to-templates')+1]
+    else:
+        path_to_templates = input("Path to HTML templates: ")
+    if '--path-to-static' in sys.argv:
+        path_to_static = sys.argv[sys.argv.index('--path-to-static')+1]
+    else:
+        path_to_static = input("Path to static files (css, js, images): ")
+    write_config(path_to_data, n_threads, path_to_static, path_to_templates)
     _create_experiments_database(path_to_data + '/conducted_experiments.sqlite')
     _create_current_simulations_folders(path_to_data, n_threads)
 

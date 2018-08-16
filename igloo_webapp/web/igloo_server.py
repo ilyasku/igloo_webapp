@@ -42,10 +42,11 @@ class IglooServer:
                        form.n_flies.data)
         self.current_id += 1
         e.id_ = self.current_id
-        m = hashlib.shake_128()
-        m.update(str(e.id_).encode())        
-        e.digest = m.hexdigest(4)
-        e.date_submit = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        now = datetime.now()
+        e.date_submit = now.strftime("%Y-%m-%d %H:%M:%S")
+        m = hashlib.sha256()
+        m.update(str(e.id_ * now.microsecond).encode())        
+        e.digest = m.hexdigest()[:10]
 
         self.job_manager.put_job(e)
         
@@ -92,7 +93,7 @@ class IglooServer:
                                form=fetch_data_form)
 
 def _is_valid_hash(h):
-    if len(h) != 8:
+    if len(h) != 10:
         return False
     return True
     
