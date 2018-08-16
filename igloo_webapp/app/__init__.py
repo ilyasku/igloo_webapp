@@ -6,8 +6,6 @@ from igloo_webapp.config_io import read_config
 
 import os
 here = os.path.dirname(os.path.realpath(__file__))
-home = home = os.path.expanduser("~")
-
 
 
 jm = JobManager(read_config()['n_threads'])
