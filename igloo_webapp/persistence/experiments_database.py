@@ -6,8 +6,8 @@ from ..config_io import read_config
 class ExperimentsDatabase:
 
     def __init__(self):
-        path_to_db = read_config()['path_to_data'] + '/conducted_experiments.sqlite'
-        self.connection = sqlite3.connect(path_to_db)
+        self.path_to_db = read_config()['path_to_data'] + '/conducted_experiments.sqlite'
+        self.connection = sqlite3.connect(self.path_to_db)
         self.cursor = self.connection.cursor()
         self.cursor.arraysize = 30
 

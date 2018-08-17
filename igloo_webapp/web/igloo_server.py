@@ -58,7 +58,7 @@ class IglooServer:
             digest = fetch_data_form.job_digest.data
             if not _is_valid_hash(digest):
                 header = "Provided hash '{}' is not valid!".format(digest)
-                message = "Job hash has to consist of exactly 8 characters/numbers."
+                message = "Job hash has to consist of exactly 10 characters/numbers."
                 return render_template('results.html', title='Fetch Results',
                                        form=fetch_data_form,
                                        message=_FetchMessage(False, header, [message]))
