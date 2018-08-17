@@ -27,7 +27,7 @@ def _create_experiments_database(path_to_db):
     simulation_type text NOT NULL,
     n_flies integer NOT NULL,
     date_submit text NOT NULL,
-    date_start text NOT NULL,
+    date_start text,
     date_finish text)
     """
     cursor.execute(create_string)

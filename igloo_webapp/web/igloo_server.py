@@ -2,6 +2,7 @@ from flask import (render_template, redirect, flash,
                    url_for, session, abort)
 from datetime import datetime
 import hashlib
+import random
 from typing import List
 from .run_rwmc_form import RunRWMCForm
 from .fetch_data_form import FetchDataForm
@@ -40,14 +41,19 @@ class IglooServer:
                        form.frames_per_sec.data,
                        form.simulation_type.data,
                        form.n_flies.data)
+        edb = ExperimentsDatabase()
         self.current_id += 1
         e.id_ = self.current_id
         now = datetime.now()
         e.date_submit = now.strftime("%Y-%m-%d %H:%M:%S")
         m = hashlib.sha256()
-        m.update(str(e.id_ * now.microsecond).encode())        
-        e.digest = m.hexdigest()[:10]
-
+        m.update(str(e.id_ * now.microsecond).encode())
+        d = m.hexdigest()[:10]
+        while edb.hash_is_already_in_db(d):
+            m.update(str(random.randint).encode())
+            d = m.hexdigest()[:10]
+        e.digest = d
+        edb.insert_experiment(e)
         self.job_manager.put_job(e)
         
         return e.digest
@@ -74,7 +80,10 @@ class IglooServer:
             if e.date_finish is None:
                 header = "Your job with hash '{}' is not finished!".format(digest)
                 msg1 = "{}: job submitted to server".format(e.date_submit)
-                msg2 = "{}: simulation started".format(e.date_start)                
+                if e.date_start is None:
+                    msg2 = "Simulation not started yet"                    
+                else:
+                    msg2 = "{}: simulation started".format(e.date_start)
                 return render_template('results.html', title='Fetch Results',
                                        form=fetch_data_form,
                                        message=_FetchMessage(False, header, [msg1, msg2]))

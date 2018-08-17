@@ -64,7 +64,7 @@ def _perform_simulation_and_update_database(e: Experiment, index: int):
     
     rwmc = DummyRWMC(**(e.to_kwargs_dict_for_RWMC()))
     e.date_start = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")    
-    edb.insert_experiment(e)    
+    edb.set_date_start(e.id_, e.date_start)    
     
     rwmc.simulateFlyPopulation(e.n_flies)
     

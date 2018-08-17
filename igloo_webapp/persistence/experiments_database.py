@@ -33,6 +33,11 @@ class ExperimentsDatabase:
         """
         self.cursor.execute(insert_string, experiment.to_database_tuple())
         self.connection.commit()
+
+    def set_date_start(self, experiment_id: int, date_start: str):
+        update_string = "UPDATE experiments SET date_start = ? WHERE _id = ?"
+        self.cursor.execute(update_string, (date_start, experiment_id))
+        self.connection.commit()
         
     def set_date_finish(self, experiment_id: int, date_finish: str):
         update_string = "UPDATE experiments SET date_finish = ? WHERE _id = ?"
@@ -46,4 +51,11 @@ class ExperimentsDatabase:
         if id_tuple[0] is None:
             return -1
         return id_tuple[0]
+        
+    def hash_is_already_in_db(self, digest: str) -> bool:
+        self.cursor.execute("SELECT _id FROM experiments WHERE hash = ?", (digest,))
+        return_tuple = self.cursor.fetchone()
+        if return_tuple is None:
+            return False
+        return True
         

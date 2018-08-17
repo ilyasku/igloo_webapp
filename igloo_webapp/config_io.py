@@ -19,7 +19,7 @@ def write_config(path_to_data: str, n_threads: int,
 def read_config() -> Dict[str, Union[str, int]]:        
     try:
         conf = json.load(open(ROOT_PATH_TO_CONFIG, 'r'))
-    except PermissionError:
+    except (PermissionError, FileNotFoundError):
         conf = json.load(open(PATH_TO_CONFIG, 'r'))
     return conf
     
