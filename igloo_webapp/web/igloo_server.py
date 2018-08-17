@@ -3,12 +3,14 @@ from flask import (render_template, redirect, flash,
 from datetime import datetime
 import hashlib
 import random
+import os
 from typing import List
 from .run_rwmc_form import RunRWMCForm
 from .fetch_data_form import FetchDataForm
 from .job_manager import JobManager
 from ..model.experiment import Experiment
 from ..persistence.experiments_database import ExperimentsDatabase
+from ..persistence.data_output_handler import get_persistent_folder_name
 
 
 Digest = str
@@ -92,12 +94,15 @@ class IglooServer:
             msg1 = "{}: job submitted to server".format(e.date_submit)
             msg2 = "{}: simulation started".format(e.date_start)
             msg3 = "{}: simulation finished".format(e.date_finish)
+
+            file_size = _get_size_of_datazip(get_persistent_folder_name(e.id_) + "/data.zip")
+            
             return render_template('results.html', title='Fetch Results',
                                    form=fetch_data_form,
                                    message=_FetchMessage(True, header, [msg0, msg1, msg2, msg3]),
                                    digest=digest,
-                                   files=[_FetchableFile('out.json',
-                                                         'dummy file (size: 124.2 MB)!')])
+                                   files=[_FetchableFile('data.zip',
+                                                         'Zipped raw data, collection of text files (size: {} MB)'.format(file_size))])
         return render_template('results.html', title='Fetch Results',
                                form=fetch_data_form)
 
@@ -105,6 +110,10 @@ def _is_valid_hash(h):
     if len(h) != 10:
         return False
     return True
+
+def _get_size_of_datazip(fname: str) -> float:
+    stat = os.stat(fname)
+    return stat.st_size / 1.e6
     
 class _FetchMessage:
 
