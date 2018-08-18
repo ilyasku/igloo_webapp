@@ -6,18 +6,24 @@
   <head>
   </head>  
   <body> <!-- use this for mobile device support: style="font-size: 1.5vw;"> -->
-    <h1 style="font-size: 266%;"><a href="{{ url_for('show_run_rwmc_form') }}">Igloo Web</a></h1>   
+    <h1 style="font-size: 266%;"><a href="{{ url_for('show_run_rwmc_form') }}">IGLOO Web</a></h1>   
     <div class="headerNavigation">
       <a href="{{ url_for('show_fetch_results') }}">Fetch Results</a>
       <a href="{{ url_for('show_run_rwmc_form') }}">Submit New Job</a>
+      <a href="{{ url_for('show_igloo_doc') }}" style="padding-left: 30px; font-size: 1.0em;">IGLOO Documentation</a>
       {% if session.get('is_admin') %}
       <a href="{{ url_for('show_admin_page') }}">Admin</a>
       {% endif %}
     </div>
     <hr>
+    {% if stats %}
+    <div style="float: left; margin: 0 0 10px 10px; width: 100%;">
+      <tt>IGLOO Web simulated <b>{{ stats.n_flies_total }}</b> flies for a total of <b>{{ stats.duration_total }}</b> seconds!</tt>
+    </div>
+    {% endif %}
     {% with messages = get_flashed_messages() %}
     {% if messages %}
-    <ul>
+    <ul style="color: red;">
       {% for message in messages %}
       <li>{{ message }}</li>
       {% endfor %}

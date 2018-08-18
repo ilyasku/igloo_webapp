@@ -23,15 +23,19 @@ class IglooServer:
         self.current_id = edb.get_maximum_id()
 
     def serve_run_rwmc_form(self):
-        form = RunRWMCForm()
+        form = RunRWMCForm()        
         if form.validate_on_submit():
             job_digest = self.handle_run_rwmc_form(form)
             return render_template('submit_job.html',
                                    title='Submit Job',
                                    form=form,
-                                   job_digest=job_digest)
+                                   job_digest=job_digest,
+                                   stats=_IGLOOStats())
+        else:
+            flash("Job submission failed! See parameter fields below if any parameters were invalid.")
         return render_template('submit_job.html', title='Submit Job',
-                               form=form)
+                               form=form,
+                               stats=_IGLOOStats())
     
     def handle_run_rwmc_form(self, form: RunRWMCForm) -> Digest:
         e = Experiment(form.length.data,
@@ -69,7 +73,8 @@ class IglooServer:
                 message = "Job hash has to consist of exactly 10 characters/numbers."
                 return render_template('results.html', title='Fetch Results',
                                        form=fetch_data_form,
-                                       message=_FetchMessage(False, header, [message]))
+                                       message=_FetchMessage(False, header, [message]),
+                                       stats=_IGLOOStats())
             e = ExperimentsDatabase().get_experiment_by_hash_digest(digest)
             if e is None:
                 header = "Job with hash '{}' not found!".format(digest)
@@ -78,7 +83,8 @@ class IglooServer:
                 message += "Don't hesitate to contact us for help!"
                 return render_template('results.html', title='Fetch Results',
                                        form=fetch_data_form,
-                                       message=_FetchMessage(False, header, [message]))
+                                       message=_FetchMessage(False, header, [message]),
+                                       stats=_IGLOOStats())
             if e.date_finish is None:
                 header = "Your job with hash '{}' is not finished!".format(digest)
                 msg1 = "{}: job submitted to server".format(e.date_submit)
@@ -88,7 +94,8 @@ class IglooServer:
                     msg2 = "{}: simulation started".format(e.date_start)
                 return render_template('results.html', title='Fetch Results',
                                        form=fetch_data_form,
-                                       message=_FetchMessage(False, header, [msg1, msg2]))
+                                       message=_FetchMessage(False, header, [msg1, msg2]),
+                                       stats=_IGLOOStats())
             header = "Job with hash '{}' finished successfully!".format(digest)
             msg0 = "Click links below to fetch data in desired format."
             msg1 = "{}: job submitted to server".format(e.date_submit)
@@ -102,9 +109,11 @@ class IglooServer:
                                    message=_FetchMessage(True, header, [msg0, msg1, msg2, msg3]),
                                    digest=digest,
                                    files=[_FetchableFile('data.zip',
-                                                         'Zipped raw data, collection of text files (size: {} MB)'.format(file_size))])
+                                                         'Zipped raw data, collection of text files (size: {} MB)'.format(file_size))],
+                                   stats=_IGLOOStats())
         return render_template('results.html', title='Fetch Results',
-                               form=fetch_data_form)
+                               form=fetch_data_form,
+                               stats=_IGLOOStats())
 
 def _is_valid_hash(h):
     if len(h) != 10:
@@ -127,3 +136,11 @@ class _FetchableFile:
     def __init__(self, fname: str, label: str):
         self.fname = fname
         self.label = label
+
+class _IGLOOStats:
+
+    def __init__(self):
+        edb = ExperimentsDatabase()
+        self.n_flies_total, self.duration_total =\
+            edb.get_total_n_flies_and_duration()
+        

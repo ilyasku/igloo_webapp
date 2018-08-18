@@ -23,3 +23,11 @@ def fetch(digest: str, fname: str):
     id_ = ExperimentsDatabase().get_experiment_by_hash_digest(digest).id_
     folder_name = get_persistent_folder_name(id_)
     return send_from_directory(folder_name, fname, as_attachment=True)
+
+@app.route("/not-published-yet")
+def show_not_published():
+    return app.send_static_file('not_published.html')
+
+@app.route("/doc")
+def show_igloo_doc():
+    return app.send_static_file('doc/index.html')
