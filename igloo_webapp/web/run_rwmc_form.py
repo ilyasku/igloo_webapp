@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import (FloatField, SelectField,
                      IntegerField, SubmitField)
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, NumberRange
 
 
 class RunRWMCForm(FlaskForm):    
@@ -15,5 +15,10 @@ class RunRWMCForm(FlaskForm):
     frames_per_sec = IntegerField('Frames per Sec.', validators=[DataRequired()], default=10)
     simulation_type = SelectField('Simulation Type', choices=[('interpolate', 'Interpolate'),
                                                               ('onData', 'On Data')])
-    n_flies = IntegerField('Number of Flies/Simulations', validators=[DataRequired()], default=1)
+    n_flies = IntegerField('Number of Flies/Simulations', validators=[DataRequired(), NumberRange(0,
+                                                                                                  100,
+                                                                                                  'Maximum 100 Flies allowed.' +
+                                                                                                  ' Download IGLOO code and run it ' +
+                                                                                                  'on your machine if you need larger n.')],
+                           default=1)
     submit = SubmitField('Submit Job')

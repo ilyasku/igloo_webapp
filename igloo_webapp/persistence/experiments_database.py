@@ -1,4 +1,5 @@
 import sqlite3
+from typing import Tuple
 from ..model.experiment import Experiment
 from ..config_io import read_config
 
@@ -51,6 +52,11 @@ class ExperimentsDatabase:
         if id_tuple[0] is None:
             return -1
         return id_tuple[0]
+
+    def get_total_n_flies_and_duration(self) -> Tuple[int, float]:
+        self.cursor.execute("SELECT sum(n_flies), sum(n_flies * duration) FROM experiments")
+        fetched = self.cursor.fetchone()
+        return fetched
         
     def hash_is_already_in_db(self, digest: str) -> bool:
         self.cursor.execute("SELECT _id FROM experiments WHERE hash = ?", (digest,))

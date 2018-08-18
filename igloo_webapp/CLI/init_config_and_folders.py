@@ -1,5 +1,6 @@
 import sqlite3
 import os
+import click
 from igloo_webapp.config_io import write_config
 
 
@@ -43,24 +44,12 @@ def _get_tmp_folder_name(prefix: str, index: int) -> str:
     tmp_folder_name = prefix + "/tmp_current_simulation_{}".format(index)
     return tmp_folder_name
 
-def main():
-    import sys
-    if '--n-threads' in sys.argv:
-        n_threads = int(sys.argv[sys.argv.index('--n-threads') + 1])
-    else:
-        n_threads = int(input("Number of threads igloo can use: "))
-    if '--path-to-data' in sys.argv:
-        path_to_data = sys.argv[sys.argv.index('--path-to-data')+1]
-    else:
-        path_to_data = input("Folder to store data in: ")
-    if '--path-to-templates' in sys.argv:
-        path_to_templates = sys.argv[sys.argv.index('--path-to-templates')+1]
-    else:
-        path_to_templates = input("Path to HTML templates: ")
-    if '--path-to-static' in sys.argv:
-        path_to_static = sys.argv[sys.argv.index('--path-to-static')+1]
-    else:
-        path_to_static = input("Path to static files (css, js, images): ")
+@click.command()
+@click.argument('path-to-data')
+@click.option('--n-threads', '-n', default=4, type=int)
+@click.option('--path-to-static', '-s', default='/var/www/igloo_webapp/static')
+@click.option('--path-to-templates', '-t', default='/var/www/igloo_webapp/templates')
+def main(path_to_data, n_threads, path_to_static, path_to_templates):
     write_config(path_to_data, n_threads, path_to_static, path_to_templates)
     _create_experiments_database(path_to_data + '/conducted_experiments.sqlite')
     _create_current_simulations_folders(path_to_data, n_threads)
