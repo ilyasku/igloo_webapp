@@ -12,20 +12,20 @@ class RunRWMCForm(FlaskForm):
     T_rear = FloatField('Rearing Temperature [C]', validators=[DataRequired()], default=25)
     length = FloatField('Length [mm]', validators=[DataRequired()], default=50)
     duration = FloatField('Walk Duration [s]',
-                          validators=[DataRequired(),
-                                      NumberRange(0.0, 3600,
-                                                  'Needs to be in range [0.0, 3600.0].')],
+                          validators=[DataRequired("Floating point number in range [0.0, 7200.0] required."),
+                                      NumberRange(0.0, 7200,
+                                                  'Needs to be in range [0.0, 7200.0].')],
                           default=5)
     frames_per_sec = IntegerField('Frames per Sec.',
-                                  validators=[DataRequired(),
+                                  validators=[DataRequired("Floating point number in range [1.0, 100.0] required."),
                                               NumberRange(1.0, 100,
                                                           'Needs to be in range [1.0, 100.0].')],
                                   default=10)
     simulation_type = SelectField('Simulation Type', choices=[('interpolate', 'Interpolate'),
                                                               ('onData', 'On Data')])
     n_flies = IntegerField('Number of Flies/Simulations',
-                           validators=[DataRequired(),
-                                       NumberRange(0, 100,
+                           validators=[DataRequired("Integer in range [1, 100] required."),
+                                       NumberRange(1, 100,
                                                    'Maximum 100 Flies allowed.' +
                                                    ' Download IGLOO code and run it ' +
                                                    'on your machine if you need larger n.')],
