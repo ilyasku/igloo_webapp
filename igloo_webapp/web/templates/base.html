@@ -6,13 +6,17 @@
   <head>
   </head>  
   <body> <!-- use this for mobile device support: style="font-size: 1.5vw;"> -->
-    <h1 style="font-size: 266%;"><a href="{{ url_for('show_run_rwmc_form') }}">IGLOO Web</a></h1>   
+    <div class="banner">
+      <h1 style="font-size: 266%;"><a href="{{ url_for('show_run_rwmc_form') }}">IGLOO Web</a></h1>
+    </div>
     <div class="headerNavigation">
-      <a href="{{ url_for('show_fetch_results') }}">Fetch Results</a>
-      <a href="{{ url_for('show_run_rwmc_form') }}">Submit New Job</a>
-      <a style="padding-left: 30px; font-size: 1.0em;">IGLOO Documentation</a>
+      <a href="{{ url_for('show_fetch_results') }}">FETCH RESULTS</a>
+      <a href="{{ url_for('show_run_rwmc_form') }}">SUBMIT NEW JOB</a>
+      <a style="font-size: 1.0em;">IGLOO DOCUMENTATION</a>
+      <a href="{{ url_for('show_authors') }}" style="font-size: 1.0em;">AUTHORS</a>
+      <a href="{{ url_for('show_impressum') }}" style="font-size: 1.0em;">IMPRESSUM</a>
       {% if session.get('is_admin') %}
-      <a href="{{ url_for('show_admin_page') }}">Admin</a>
+      <a href="{{ url_for('show_admin_page') }}">ADMIN</a>
       {% endif %}
     </div>
     <hr>

@@ -1,4 +1,4 @@
-from flask import send_from_directory
+from flask import send_from_directory, render_template
 from igloo_webapp.app import app, server, read_config
 from igloo_webapp.persistence.data_output_handler import get_persistent_folder_name
 from igloo_webapp.persistence.experiments_database import ExperimentsDatabase
@@ -27,6 +27,15 @@ def fetch(digest: str, fname: str):
 @app.route("/not-published-yet")
 def show_not_published():
     return app.send_static_file('not_published.html')
+
+@app.route("/impressum")
+def show_impressum():
+    return render_template("impressum.html")
+
+@app.route("/authors")
+def show_authors():
+    return render_template("authors.html")
+
 
 # @app.route("/doc")
 # def show_igloo_doc():
