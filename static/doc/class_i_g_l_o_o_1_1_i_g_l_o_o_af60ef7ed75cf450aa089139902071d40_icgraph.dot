@@ -1,0 +1,16 @@
+digraph "IGLOO.IGLOO.updateAmbientTemp"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="IGLOO.IGLOO.updateAmbientTemp",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="IGLOO.IGLOO.resetTempTrace",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_i_g_l_o_o_1_1_i_g_l_o_o.html#a7397985c17dcaf0c5a726b09b50a1ccc"];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="IGLOO.IGLOO.__init__",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_i_g_l_o_o_1_1_i_g_l_o_o.html#ac01d4a3d7a49e2b4e3ef8218493ede11"];
+  Node2 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="IGLOO.IGLOO.simulateSingleFly",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_i_g_l_o_o_1_1_i_g_l_o_o.html#aab16b9b88613383c488e2fc08f9e26d9"];
+  Node4 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="IGLOO.IGLOO.simulateFlyPopulation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$class_i_g_l_o_o_1_1_i_g_l_o_o.html#a74557ba605623b0ed60d27dfe73e74ca"];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

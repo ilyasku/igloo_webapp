@@ -1,0 +1,10 @@
+digraph "/home/bgeurten/PyProjects" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_da1fdda69e9a9b3349df15a00b35a7e4 {
+    graph [ bgcolor="#eeeeff", pencolor="black", label="" URL="dir_da1fdda69e9a9b3349df15a00b35a7e4.html"];
+    dir_da1fdda69e9a9b3349df15a00b35a7e4 [shape=plaintext label="PyProjects"];
+    dir_d4c8069d34a30cb9b20ac55a6f0f9f2f [shape=box label="Igloo" color="black" fillcolor="white" style="filled" URL="dir_d4c8069d34a30cb9b20ac55a6f0f9f2f.html"];
+  }
+}

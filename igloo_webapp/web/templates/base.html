@@ -10,7 +10,7 @@
     <div class="headerNavigation">
       <a href="{{ url_for('show_fetch_results') }}">Fetch Results</a>
       <a href="{{ url_for('show_run_rwmc_form') }}">Submit New Job</a>
-      <a href="{{ url_for('show_igloo_doc') }}" style="padding-left: 30px; font-size: 1.0em;">IGLOO Documentation</a>
+      <a style="padding-left: 30px; font-size: 1.0em;">IGLOO Documentation</a>
       {% if session.get('is_admin') %}
       <a href="{{ url_for('show_admin_page') }}">Admin</a>
       {% endif %}

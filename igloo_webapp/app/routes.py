@@ -28,6 +28,6 @@ def fetch(digest: str, fname: str):
 def show_not_published():
     return app.send_static_file('not_published.html')
 
-@app.route("/doc")
-def show_igloo_doc():
-    return app.send_static_file('doc/index.html')
+# @app.route("/doc")
+# def show_igloo_doc():
+#   return app.send_static_file('doc/index.html')

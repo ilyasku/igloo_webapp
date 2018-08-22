@@ -5,7 +5,7 @@
   Start <a href="https://github.com/zerotonin/igloo">IGLOO simulations</a> via the form on the left.  
   The IGLOO model is described in our publication <a href="{{ url_for('show_not_published') }}">TITLE</a>.
   When you submit a job, the method <tt>IGLOO.simulateFlyPopulation</tt> will be called with your parameters.
-  Find a documentation of the <tt>IGLOO</tt> class <a href="{{ url_for('show_igloo_doc') }}#IGLOO-class">here</a>.
+  Find a documentation of the <tt>IGLOO</tt> class <a>here</a>.
 </div>
 <div style="float: left; max-width:600px; width: 45%;">
   <h3>Submit New Job</h3>
@@ -70,6 +70,13 @@
     <p>
       {{ form.n_flies.label }}<br/>
       {{ form.n_flies() }}
+      {% for error in form.n_flies.errors %}
+      <span style="color: red;"><br/>[{{ error }}]</span>
+      {% endfor %}
+    </p>
+    <p class="notReally">
+      {{ form.phone_number_a453c45163.label }}<br/>
+      {{ form.phone_number_a453c45163() }}
       {% for error in form.n_flies.errors %}
       <span style="color: red;"><br/>[{{ error }}]</span>
       {% endfor %}

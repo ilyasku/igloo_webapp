@@ -1,0 +1,9 @@
+digraph "/home/bgeurten/PyProjects/Igloo" {
+  compound=true
+  node [ fontsize="10", fontname="Helvetica"];
+  edge [ labelfontsize="10", labelfontname="Helvetica"];
+  subgraph clusterdir_da1fdda69e9a9b3349df15a00b35a7e4 {
+    graph [ bgcolor="#ddddee", pencolor="black", label="PyProjects" fontname="Helvetica", fontsize="10", URL="dir_da1fdda69e9a9b3349df15a00b35a7e4.html"]
+  dir_d4c8069d34a30cb9b20ac55a6f0f9f2f [shape=box, label="Igloo", style="filled", fillcolor="#eeeeff", pencolor="black", URL="dir_d4c8069d34a30cb9b20ac55a6f0f9f2f.html"];
+  }
+}

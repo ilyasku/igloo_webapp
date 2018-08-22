@@ -42,3 +42,7 @@ label, select, input{
 .failure {
     color: #ff5555;
 }
+
+.notReally {
+    display: none;
+}
