@@ -34,7 +34,7 @@ def show_impressum():
 
 @app.route("/authors")
 def show_authors():
-    return render_template("authors.html")
+    return server.serve_authors_page()
 
 
 # @app.route("/doc")

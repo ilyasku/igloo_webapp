@@ -113,6 +113,18 @@ class IglooServer:
                                form=fetch_data_form,
                                stats=_IGLOOStats())
 
+    def serve_authors_page(self):
+        diggo = _Author('Diego Giraldo', 'Postdoc?', 'Cellular Neurobiology', 'University of Göttingen',
+                        None, 'Results and analysis.')
+        ille = _Author('Ilyas Kuhlemann', 'PhD Student', 'Institute of Physical Chemistry',
+                       'University of Göttingen', None, 'Igloo Webapp.',
+                       'i.kuhlemann@stud.uni-goettingen.de')
+        doc_G = _Author('Bart Geurten', 'Postdoc', 'Cellular Neurobiology', 'University of Göttingen',
+                        None, '')
+        authors = [diggo, doc_G, ille]
+        return render_template('authors.html', title='Authors',
+                               authors=authors)
+
 def _is_valid_hash(h):
     if len(h) != 10:
         return False
@@ -121,6 +133,22 @@ def _is_valid_hash(h):
 def _get_size_of_datazip(fname: str) -> float:
     stat = os.stat(fname)
     return stat.st_size / 1.e6
+
+class _Author:
+    def __init__(self, name: str, occupation: str, institute: str,
+                 employer: str,
+                 picture_url: str,
+                 contribution: str, contact: str=None):
+        self.name = name
+        self.occupation = occupation
+        self.institute = institute
+        self.employer = employer
+        if picture_url is None:
+            self.picture_url = 'author_pictures/place_holder.jpeg'
+        else:
+            self.picture_url = picture_url
+        self.contribution = contribution
+        self.contact = contact
     
 class _FetchMessage:
 
