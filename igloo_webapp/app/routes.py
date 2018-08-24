@@ -36,11 +36,6 @@ def show_impressum():
 def show_authors():
     return server.serve_authors_page()
 
-'''
 @app.route("/doc")
-@app.route("/doc/<fname>")
-def show_igloo_doc(fname=None):
-    if fname=None:
-        fname = 'index.html'
-    return render_template('doc/{}'.format(fname))
-'''
+def show_igloo_doc():
+    return app.send_static_file('doc/igloo_documentation_0_1.pdf')

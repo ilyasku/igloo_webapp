@@ -7,12 +7,16 @@
   </head>  
   <body> <!-- use this for mobile device support: style="font-size: 1.5vw;"> -->
     <div class="banner">
-      <h1 style="font-size: 266%;"><a href="{{ url_for('show_run_rwmc_form') }}">IGLOO Web</a></h1>
+      <!-- <h1 style="font-size: 266%;"><a href="{{ url_for('show_run_rwmc_form') }}">IGLOO Web</a></h1> -->
+      <a href="http://uni-goettingen.de"><img id="uni-logo" src="https://www.uni-goettingen.de/img/redesign/logo.svg" style="width: 40%; max-width: 450px; margin-left: 2%;" /></a>
+      <a href="{{ url_for('show_run_rwmc_form') }}" style="margin: 0 2% 0 21%;">
+	<img id="uni-logo" src="{{ url_for('static', filename='logos/igloo2web_white.svg') }}" width="25%;" style="max-width: 250px;"  />
+      </a>
     </div>
     <div class="headerNavigation">
       <a href="{{ url_for('show_run_rwmc_form') }}">SUBMIT NEW JOB</a>
       <a href="{{ url_for('show_fetch_results') }}">FETCH RESULTS</a>      
-      <a style="font-size: 1.0em;">IGLOO DOCUMENTATION</a>
+      <a style="font-size: 1.0em;" href="{{ url_for('show_igloo_doc') }}">IGLOO DOCUMENTATION</a>
       <a href="{{ url_for('show_authors') }}" style="font-size: 1.0em;">AUTHORS</a>
       <a href="{{ url_for('show_impressum') }}" style="font-size: 1.0em;">IMPRESSUM</a>
       {% if session.get('is_admin') %}

@@ -114,14 +114,24 @@ class IglooServer:
                                stats=_IGLOOStats())
 
     def serve_authors_page(self):
-        diggo = _Author('Diego Giraldo', 'Postdoc?', 'Cellular Neurobiology', 'University of Göttingen',
-                        None, 'Results and analysis.')
+        diggo = _Author('Diego Giraldo', 'Postdoc?',
+                        'Cellular Neurobiology', 'University of Göttingen',
+                        'author_pictures/diego.png',
+                        'Main paper manuscript, recording and analysis of larval data.' +
+                        'Proof of concept experiments.')
+        andrea = _Author('Andrea Adden', 'PhD Student',
+                         'Department of Biology', 'Lund University',
+                         'author_pictures/andrea.png', 'Main paper manuscript, recording and analysis of adult data.')
         ille = _Author('Ilyas Kuhlemann', 'PhD Student', 'Institute of Physical Chemistry',
-                       'University of Göttingen', None, 'Igloo Webapp.',
-                       'i.kuhlemann@stud.uni-goettingen.de')
-        doc_G = _Author('Bart Geurten', 'Postdoc', 'Cellular Neurobiology', 'University of Göttingen',
-                        None, '')
-        authors = [diggo, doc_G, ille]
+                       'University of Göttingen', 'author_pictures/ilyas.png', 'Igloo Webapp.')
+        heribert = _Author('Heribert Gras', '',
+                           'Cellular Neurobiology', 'University of Göttingen',
+                           'author_pictures/heribert.png', 'Formalising IGLOO model and developing the code.')
+        doc_G = _Author('Bart Geurten', 'Postdoc',
+                        'Cellular Neurobiology', 'University of Göttingen',
+                        'author_pictures/bart.png', 'Main paper manuscript, formalising IGLOO model and developing the code.',
+                        'bart.geurten@biologie.uni-goettingen.de')
+        authors = [diggo, andrea, ille, heribert, doc_G]
         return render_template('authors.html', title='Authors',
                                authors=authors)
 

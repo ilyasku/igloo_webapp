@@ -1,22 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div style="padding-left: 2%;">
-  <h2 style="padding-left: 5%;">Authors</h2>
+<h2 style="padding-left: 45%;">Authors</h2>
+<div class="authorDiv" style="padding-left: 2%;">  
   {% for a in authors %}
   <div class="authorBlock">
-    <img src="{{ url_for('static', filename=a.picture_url) }}" class="authorPicture"/>
+    <img src="{{ url_for('static', filename=a.picture_url) }}" class="authorPicture" />
     <div class="authorInfo">
-      <p><b>{{ a.name }}</b></p>
-      {{ a.occupation }}<br/>
-      {{ a.institute }} <br/>
-      {{ a.employer }}  <br/>
-      {% if a.contact %}
-      {{ a.contact }}   <br/>
-      {% endif %}</p>
-      <p><b>Contribution:</b> {{ a.contribution }}</p>
+      <b>{{ a.name }}</b>
+      <p>
+	{{ a.institute }} <br/>
+	{{ a.employer }}  <br/>
+	{% if a.contact %}
+	{{ a.contact }}   <br/>
+	{% endif %}
+      </p>
+      <p>
+	<b>Contribution:</b> {{ a.contribution }}
+      </p>
     </div>
   </div>
   {% endfor %}
+</div>
+
+<div style="min-width: 500px; padding-left: 2%; float: left; font-size: 1.3em;">
+  <br/>
+  <p>
+    All authors designed the model and reviewed the manuscript.
+  </p>
 </div>
 {% endblock %}
