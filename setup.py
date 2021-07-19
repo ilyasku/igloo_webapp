@@ -8,7 +8,7 @@ USAGE:
 from setuptools import setup
 
 setup(name='igloo_webapp',
-      version='0.2.0',
+      version='0.2.5',
       description='Run igloo random walk monte carlo simulations via web interface',
       url='',
       author='Ilyas Kuhlemann',
@@ -31,4 +31,5 @@ setup(name='igloo_webapp',
                         "nose",
                         "click",
                         "matplotlib"],
+      include_package_data=True,
       zip_safe=False)
