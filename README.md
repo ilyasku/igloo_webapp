@@ -1,8 +1,53 @@
 # IGLOO Webapp
 
-Webapp to run [IGLOO]() simulations.
+Webapp to run [IGLOO](https://github.com/zerotonin/igloo) simulations.
 
 # Deploy
+
+## On Uberspace
+
+### Create virtualenv
+
+```
+virtualenv ~/venvs/igloo
+source ~/venvs/igloo/bin/activate
+# we will use uwsgi to serve the web app:
+pip install uwsgi
+```
+
+### Install igloo_webapp as wheel
+
+### Create ini files
+
+One in a location of your choice, mine is in `~/web_apps/igloo.ini`:
+
+```
+[uwsgi]
+mount = /igloo=igloo_webapp:app
+manage-script-name=true
+pidfile = igloo.pid
+processes = 2
+http-socket = :2024
+chmod-socket = 660
+vacuum = true
+virtualenv = /home/ilyasnc/venvs/igloo
+```
+
+(My username is ilyasnc.)
+One in ``~/etc/services.d/igloo.ini``:
+
+```
+directory=%(ENV_HOME)s/web_apps
+command=%(ENV_HOME)s/venvs/igloo/bin/uwsgi igloo.ini
+```
+
+``directory`` has to point to the folder where you put the first ``igloo.ini`` in.
+
+### ``config.py``
+
+Put 
+
+## On a Raspberry
 
 This webapp was built with the [Flask framework](http://flask.pocoo.org/). So it should be possible
 to deploy it following their [deployment instructions](http://flask.pocoo.org/docs/1.0/tutorial/deploy/).  
@@ -17,7 +62,7 @@ running Apache2 with `mod_wsgi` when I wanted to deploy it:
 
 3. I ran into issues with writing to the database from the apache process. You need to give read+write access to the `sqlite` file as well as the folder! (The folder is the data folder you specified in step 1.) I think the same is true for the `tmp_current_simulation_*` folders that the processes write into while the simulations are running.
 
-## `wsgi` File I Used on Raspberry Pi:
+### `wsgi` File I Used on Raspberry Pi:
 File `/var/www/igloo_webapp/igloo_webapp.wsgi`: 
 ```
 # !/usr/bin/python3
@@ -29,7 +74,7 @@ with open(activate_this) as file_:
 from igloo_webapp.app import app as application
 ```
 
-## Apache conf File I used on Raspberry Pi:
+### Apache conf File I used on Raspberry Pi:
 
 ```
 # file /etc/apache2/sites-available/igloo.conf:
@@ -45,3 +90,22 @@ from igloo_webapp.app import app as application
 </VirtualHost>
 ```
 This could then be enabled with Apache's command: `a2ensite igloo`.
+
+# Install IGLOO
+
+IGLOO does not have the typical python project layout with a ``setup.py`` file. You have
+to install it and its requirements manually:
+
+```
+# install requirements
+pip install scipy tqdm matplotlib
+```
+
+To install IGLOO itself, download the code from [here](https://github.com/zerotonin/igloo)
+(for example as zip and unpack it). Put the source files into a folder, e.g.
+``/some/where/IGLOO``. Add this folder to your PYTHONPATH environment variable.
+
+```
+PYTHONPATH="$PYTHONPATH:/some/where/IGLOO"
+export PYTHONPATH
+```

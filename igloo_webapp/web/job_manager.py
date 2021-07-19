@@ -6,10 +6,9 @@ import glob
 import zipfile
 from multiprocessing import Process, Queue
 import matplotlib
-matplotlib.use('TKAgg')
+matplotlib.use('agg')
 from IGLOO import IGLOO
 from ..model.experiment import Experiment
-from ..config_io import read_config
 from ..persistence.experiments_database import ExperimentsDatabase
 from ..persistence.data_output_handler import get_tmp_folder_name, get_persistent_folder_name
 

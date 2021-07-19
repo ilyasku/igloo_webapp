@@ -8,23 +8,19 @@ USAGE:
 from setuptools import setup
 
 setup(name='igloo_webapp',
-      version='0.1.3',
+      version='0.2.0',
       description='Run igloo random walk monte carlo simulations via web interface',
       url='',
-      author='Bart Geurten, Ilyas Kuhlemann',
-      author_email='bgeurte@gwdg.de',
+      author='Ilyas Kuhlemann',
+      author_email='ilyasp.ku@gmail.com',
       license='MIT',
       packages=["igloo_webapp",
-                "igloo_webapp.CLI",
                 "igloo_webapp.model",
                 "igloo_webapp.app",
                 "igloo_webapp.persistence",
                 "igloo_webapp.web"],
       entry_points={
           "console_scripts": [
-              "igloo-web-start-server=igloo_webapp.CLI.run_app:main",
-              "igloo-web-init-config-and-database=igloo_webapp.CLI.init_config_and_folders:main",
-              "igloo-web-copy-config-to-etc=igloo_webapp.CLI.copy_config_to_etc:main"
           ],
           "gui_scripts": [
           ]
@@ -33,5 +29,6 @@ setup(name='igloo_webapp',
                         "flask-wtf",
                         "wtforms",
                         "nose",
-                        "click"],
+                        "click",
+                        "matplotlib"],
       zip_safe=False)

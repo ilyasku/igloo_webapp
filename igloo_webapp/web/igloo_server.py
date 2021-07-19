@@ -1,5 +1,6 @@
-from flask import (render_template, redirect, flash,
-                   url_for, session, abort)
+import sqlite3
+
+from flask import render_template
 from datetime import datetime
 import hashlib
 import random
@@ -9,18 +10,21 @@ from .run_rwmc_form import RunRWMCForm
 from .fetch_data_form import FetchDataForm
 from .job_manager import JobManager
 from ..model.experiment import Experiment
-from ..persistence.experiments_database import ExperimentsDatabase
 from ..persistence.data_output_handler import get_persistent_folder_name
-
+from ..app.db_connect import get_db
 
 Digest = str
+
 
 class IglooServer:
 
     def __init__(self, job_manager: JobManager):
-        edb = ExperimentsDatabase()
+        edb = get_db()
         self.job_manager = job_manager
-        self.current_id = edb.get_maximum_id()
+        try:
+            self.current_id = edb.get_maximum_id()
+        except sqlite3.OperationalError:
+            self.current_id = 0
 
     def serve_run_rwmc_form(self):
         form = RunRWMCForm()        
@@ -45,7 +49,7 @@ class IglooServer:
                        form.frames_per_sec.data,
                        form.simulation_type.data,
                        form.n_flies.data)
-        edb = ExperimentsDatabase()
+        edb = get_db()
         self.current_id += 1
         e.id_ = self.current_id
         now = datetime.now()
@@ -62,7 +66,8 @@ class IglooServer:
         
         return e.digest
     
-    def serve_fetch_results(self):
+    @staticmethod
+    def serve_fetch_results():
         fetch_data_form = FetchDataForm()
         if fetch_data_form.validate_on_submit():
             digest = fetch_data_form.job_digest.data
@@ -73,7 +78,7 @@ class IglooServer:
                                        form=fetch_data_form,
                                        message=_FetchMessage(False, header, [message]),
                                        stats=_IGLOOStats())
-            e = ExperimentsDatabase().get_experiment_by_hash_digest(digest)
+            e = get_db().get_experiment_by_hash_digest(digest)
             if e is None:
                 header = "Job with hash '{}' not found!".format(digest)
                 message =  "Either we lost track of that job or the hash you entered "
@@ -113,7 +118,8 @@ class IglooServer:
                                form=fetch_data_form,
                                stats=_IGLOOStats())
 
-    def serve_authors_page(self):
+    @staticmethod
+    def serve_authors_page():
         diggo = _Author('Diego Giraldo', 'Postdoc?',
                         'Cellular Neurobiology', 'University of Göttingen',
                         'author_pictures/diego.png',
@@ -135,14 +141,17 @@ class IglooServer:
         return render_template('authors.html', title='Authors',
                                authors=authors)
 
+
 def _is_valid_hash(h):
     if len(h) != 10:
         return False
     return True
 
+
 def _get_size_of_datazip(fname: str) -> float:
     stat = os.stat(fname)
     return stat.st_size / 1.e6
+
 
 class _Author:
     def __init__(self, name: str, occupation: str, institute: str,
@@ -159,7 +168,8 @@ class _Author:
             self.picture_url = picture_url
         self.contribution = contribution
         self.contact = contact
-    
+
+
 class _FetchMessage:
 
     def __init__(self, success: bool, header: str, messages: List[str]):
@@ -167,16 +177,18 @@ class _FetchMessage:
         self.header = header
         self.messages = messages
 
+
 class _FetchableFile:
 
     def __init__(self, fname: str, label: str):
         self.fname = fname
         self.label = label
 
+
 class _IGLOOStats:
 
     def __init__(self):
-        edb = ExperimentsDatabase()
+        edb = get_db()
         self.n_flies_total, self.duration_total =\
             edb.get_total_n_flies_and_duration()
         
