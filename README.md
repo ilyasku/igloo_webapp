@@ -1,6 +1,6 @@
 # IGLOO Webapp
 
-Webapp to run [IGLOO](https://github.com/zerotonin/igloo) simulations.
+Webapp developed with python/flask to run [IGLOO](https://github.com/zerotonin/igloo) simulations.
 
 # Deploy
 
