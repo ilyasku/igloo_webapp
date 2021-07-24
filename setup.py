@@ -8,7 +8,7 @@ USAGE:
 from setuptools import setup
 
 setup(name='igloo_webapp',
-      version='0.2.5',
+      version='0.2.6',
       description='Run igloo random walk monte carlo simulations via web interface',
       url='',
       author='Ilyas Kuhlemann',

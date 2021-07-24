@@ -105,7 +105,19 @@ class IglooServer:
             msg2 = "{}: simulation started".format(e.date_start)
             msg3 = "{}: simulation finished".format(e.date_finish)
 
-            file_size = _get_size_of_datazip(get_persistent_folder_name(e.id_) + "/data.zip")
+            zip_file = get_persistent_folder_name(e.id_) + "/data.zip"
+            if not os.path.exists(zip_file):
+                return render_template('results.html', title='Fetch Results',
+                                       form=fetch_data_form,
+                                       message=_FetchMessage(False, header, [
+                                           msg0, msg1, msg2, msg3,
+                                           'But it looks like the data was deleted from the server. :(',
+                                           'On our demo servers the data gets automatically deleted after a few days.'
+                                       ]),
+                                       digest=digest,
+                                       stats=_IGLOOStats())
+
+            file_size = _get_size_of_datazip(zip_file)
             
             return render_template('results.html', title='Fetch Results',
                                    form=fetch_data_form,
